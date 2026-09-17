@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#f3f5ef">
+  <title>QAgroTech — состояние демо</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #20392d; background: #f3f5ef; }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 28px 18px 30px; line-height: 1.5; }
+    main { width: min(100%, 560px); margin: auto; }
+    .brand { display: flex; align-items: center; gap: 9px; margin-bottom: 28px; font-size: 17px; font-weight: 750; letter-spacing: -.035em; }
+    .brand-mark { width: 24px; height: 24px; border-radius: 8px 8px 8px 2px; background: #255d45; position: relative; }
+    .brand-mark::after { content: ""; position: absolute; width: 10px; height: 6px; left: 7px; top: 7px; border-left: 2px solid #d5e6a1; border-bottom: 2px solid #d5e6a1; transform: rotate(-45deg); }
+    .eyebrow { margin: 0 0 7px; color: #607263; font-size: 11px; text-transform: uppercase; font-weight: 700; letter-spacing: .11em; }
+    h1 { margin: 0; font-size: clamp(28px, 7vw, 36px); line-height: 1.15; letter-spacing: -.04em; }
+    .intro { margin: 11px 0 22px; color: #637468; font-size: 14px; }
+    .summary { display: flex; gap: 10px; align-items: flex-start; border: 1px solid #dce4d7; background: #e9eee4; padding: 15px 16px; border-radius: 16px; margin-bottom: 16px; }
+    .summary .dot { margin-top: 6px; }
+    .summary strong { display: block; font-size: 15px; }
+    .summary p { margin: 3px 0 0; color: #5f7063; font-size: 12px; }
+    .dot { width: 9px; height: 9px; flex: 0 0 9px; border-radius: 50%; background: #8c9790; }
+    .cards { display: grid; gap: 10px; }
+    .card { padding: 17px 18px 15px; background: #fff; border: 1px solid #e0e6dc; border-radius: 16px; }
+    .card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    h2 { margin: 0; font-size: 17px; letter-spacing: -.02em; }
+    .badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 650; padding: 4px 8px; border-radius: 20px; background: #eef1ee; color: #68776d; white-space: nowrap; }
+    .badge .dot { width: 6px; height: 6px; flex-basis: 6px; }
+    [data-state="up"] .badge { color: #266240; background: #e9f3e9; }
+    [data-state="up"] .dot { background: #42804b; }
+    [data-state="degraded"] .badge { color: #876319; background: #fff4da; }
+    [data-state="degraded"] .dot { background: #c6922c; }
+    [data-state="down"] .badge { color: #9a3e36; background: #fcece9; }
+    [data-state="down"] .dot { background: #c45a50; }
+    .description { margin: 6px 0 13px; color: #6b7b70; font-size: 12px; }
+    .details { display: flex; flex-wrap: wrap; gap: 7px 17px; border-top: 1px solid #edf0e9; padding-top: 11px; font-size: 12px; color: #617164; font-variant-numeric: tabular-nums; }
+    .details strong { font-weight: 600; color: #304c3c; }
+    .check-line { display: flex; justify-content: space-between; gap: 12px; align-items: center; margin: 19px 1px 0; }
+    #last-checked { margin: 0; font-size: 12px; color: #69796d; font-variant-numeric: tabular-nums; }
+    button { flex-shrink: 0; padding: 9px 12px; border: 1px solid #d6dfd1; border-radius: 10px; color: #2d5e43; background: #fff; cursor: pointer; font: inherit; font-size: 12px; font-weight: 650; min-height: 40px; }
+    button:disabled { opacity: .55; cursor: wait; }
+    button:focus-visible, a:focus-visible { outline: 3px solid #77985f; outline-offset: 3px; }
+    footer { border-top: 1px solid #dce3d5; margin-top: 24px; padding-top: 18px; }
+    footer a { display: inline-block; color: #2c6448; text-decoration-thickness: 1px; text-underline-offset: 4px; font-size: 13px; font-weight: 650; padding: 5px 0; }
+    footer p { margin: 11px 0 0; color: #728073; font-size: 11px; line-height: 1.65; }
+    noscript { display: block; margin-bottom: 20px; color: #9a3e36; }
+    @media (min-width: 600px) { body { padding-top: 46px; } .brand { margin-bottom: 36px; } }
+    @media (prefers-reduced-motion: no-preference) { .dot { transition: background-color .2s ease; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="brand"><span class="brand-mark" aria-hidden="true"></span>QAgroTech</div>
+    <p class="eyebrow">Мониторинг демо</p>
+    <h1>Состояние сервисов</h1>
+    <p class="intro">Проверка публичного адреса через интернет.</p>
+    <noscript>Для автоматического обновления включите JavaScript в браузере.</noscript>
+    <section id="summary" class="summary" data-state="unknown" role="status" aria-live="polite" aria-atomic="true">
+      <span class="dot" aria-hidden="true"></span>
+      <div><strong id="summary-title">Проверяем соединение</strong><p id="summary-detail">Получаем актуальное состояние сервисов…</p></div>
+    </section>
+    <div class="cards">
+      <section class="card" id="tunnel-card" data-state="unknown" aria-labelledby="tunnel-title">
+        <div class="card-top"><h2 id="tunnel-title">Интернет-туннель</h2><span class="badge"><span class="dot" aria-hidden="true"></span><span id="tunnel-state">Проверка</span></span></div>
+        <p class="description" id="tunnel-message">Доступность веб-сервера демо</p>
+        <div class="details"><span>Ответ <strong id="tunnel-latency">—</strong></span><span>HTTP <strong id="tunnel-http">—</strong></span></div>
+      </section>
+      <section class="card" id="vehicles-card" data-state="unknown" aria-labelledby="vehicles-title">
+        <div class="card-top"><h2 id="vehicles-title">Техника</h2><span class="badge"><span class="dot" aria-hidden="true"></span><span id="vehicles-state">Проверка</span></span></div>
+        <p class="description" id="vehicles-message">Тип, марка и номер</p>
+        <div class="details"><span>Очередь <strong id="vehicles-queued">—</strong></span><span>Устройство <strong id="vehicles-device">—</strong></span><span>Ответ <strong id="vehicles-latency">—</strong></span></div>
+      </section>
+      <section class="card" id="weeds-card" data-state="unknown" aria-labelledby="weeds-title">
+        <div class="card-top"><h2 id="weeds-title">Сорняки</h2><span class="badge"><span class="dot" aria-hidden="true"></span><span id="weeds-state">Проверка</span></span></div>
+        <p class="description" id="weeds-message">Распознавание и агрономическая оценка</p>
+        <div class="details"><span>Очередь <strong id="weeds-queued">—</strong></span><span>Устройство <strong id="weeds-device">—</strong></span><span>Ответ <strong id="weeds-latency">—</strong></span></div>
+      </section>
+    </div>
+    <div class="check-line"><p id="last-checked">Ожидаем первую проверку</p><button id="refresh" type="button">Обновить</button></div>
+    <footer>
+      <a href="https://registrar-jersey-spend-trackback.trycloudflare.com/" target="_blank" rel="noopener noreferrer">Открыть демо ↗</a>
+      <p>Обновление каждые 5 секунд, пока страница открыта и активна. Проверяется доступность и готовность сервисов, без запуска распознавания. Фоновых уведомлений нет.</p>
+    </footer>
+  </main>
+  <script>
+    (() => {
+      'use strict';
+      const MONITOR_ORIGIN = 'https://sewing-rounds-centers-ten.trycloudflare.com';
+      const POLL_MS = 5000;
+      const TIMEOUT_MS = 4000;
+      const MAX_AGE_MS = 15000;
+      const IDS = ['tunnel', 'vehicles', 'weeds'];
+      const $ = id => document.getElementById(id);
+      const stateText = { up: 'Готов', degraded: 'Подготовка', down: 'Недоступен', unknown: 'Неизвестно' };
+      let latest = null;
+      let receivedAt = 0;
+      let initialAge = Infinity;
+      let connected = false;
+      let busy = false;
+      let timer = null;
+      let controller = null;
+      let nextPollAt = 0;
+
+      function ageMs() {
+        return initialAge + Math.max(0, performance.now() - receivedAt);
+      }
+
+      function freshness(data) {
+        const serverTime = Date.parse(data.monitor_server_time);
+        const checkedTime = Date.parse(data.checked_at);
+        if (!Number.isFinite(serverTime) || !Number.isFinite(checkedTime) || checkedTime > serverTime + 1000) return Infinity;
+        const probeAges = IDS.map(id => {
+          const time = Date.parse(data.probes[id].checked_at);
+          return Number.isFinite(time) && time <= serverTime + 1000 ? Math.max(0, serverTime - time) : Infinity;
+        });
+        return Math.max(0, serverTime - checkedTime, ...probeAges);
+      }
+
+      function setSummary(state, title, detail) {
+        $('summary').dataset.state = state;
+        $('summary-title').textContent = title;
+        $('summary-detail').textContent = detail;
+      }
+
+      function render() {
+        const age = ageMs();
+        const fresh = navigator.onLine !== false && connected && latest && latest.monitor_state === 'running' && age <= MAX_AGE_MS;
+        const states = [];
+        for (const id of IDS) {
+          const probe = latest?.probes[id];
+          const state = fresh && Object.hasOwn(stateText, probe?.status) ? probe.status : 'unknown';
+          states.push(state);
+          $(id + '-card').dataset.state = state;
+          $(id + '-state').textContent = state === 'up' && id === 'tunnel' ? 'Доступен' : stateText[state];
+          $(id + '-message').textContent = fresh ? (probe.message || 'Нет подробностей') : 'Ожидаем свежие данные';
+          $(id + '-latency').textContent = fresh && Number.isFinite(probe.latency_ms) && probe.latency_ms >= 0 ? Math.round(probe.latency_ms) + ' мс' : '—';
+          if (id === 'tunnel') {
+            $('tunnel-http').textContent = fresh && Number.isInteger(probe.http_status) ? String(probe.http_status) : '—';
+          } else {
+            $(id + '-queued').textContent = fresh && Number.isInteger(probe.queued) && probe.queued >= 0 ? String(probe.queued) : '—';
+            $(id + '-device').textContent = fresh && typeof probe.device === 'string' && /^(cuda(?::\d+)?|cpu|mps)$/i.test(probe.device) ? (/^cuda/i.test(probe.device) ? 'GPU' : probe.device.toUpperCase()) : '—';
+          }
+        }
+        if (navigator.onLine === false) {
+          setSummary('unknown', 'Телефон без интернета', 'Состояние сервисов неизвестно. Обновим после восстановления связи.');
+        } else if (!connected) {
+          setSummary('unknown', 'Нет связи с монитором', 'Состояние сервисов неизвестно. Повторная попытка через 5 секунд.');
+        } else if (!fresh) {
+          setSummary('unknown', 'Ожидаем свежую проверку', 'Данные ещё не получены или устарели. Состояние сервисов неизвестно.');
+        } else if (states.includes('down')) {
+          setSummary('down', 'Есть недоступные сервисы', 'Данные получены. Подробности проверки — ниже.');
+        } else if (states.includes('unknown')) {
+          setSummary('unknown', 'Состояние уточняется', 'Часть сервисов не сообщила о готовности.');
+        } else if (states.includes('degraded')) {
+          setSummary('degraded', 'Сервисы готовятся', 'Соединение есть. Не все модели готовы к работе.');
+        } else {
+          setSummary('up', 'Демо доступно', 'Туннель отвечает, оба сервиса готовы к работе.');
+        }
+        $('last-checked').textContent = Number.isFinite(age) ? 'Проверено ' + Math.floor(age / 1000) + ' сек. назад' : 'Ожидаем первую проверку';
+      }
+
+      function schedule() {
+        clearTimeout(timer);
+        if (!document.hidden) timer = setTimeout(refresh, Math.max(0, nextPollAt - performance.now()));
+      }
+
+      async function refresh() {
+        if (busy || document.hidden) return;
+        clearTimeout(timer);
+        nextPollAt = performance.now() + POLL_MS;
+        if (navigator.onLine === false) {
+          connected = false;
+          render();
+          schedule();
+          return;
+        }
+        busy = true;
+        $('refresh').disabled = true;
+        controller = new AbortController();
+        const timeout = setTimeout(() => controller?.abort(), TIMEOUT_MS);
+        try {
+          const response = await fetch(MONITOR_ORIGIN + '/status', {
+            cache: 'no-store', credentials: 'omit', mode: 'cors', signal: controller.signal
+          });
+          if (!response.ok) throw new Error('Monitor HTTP ' + response.status);
+          const data = await response.json();
+          if (data?.schema_version !== 1 || !['starting', 'running', 'stale'].includes(data.monitor_state) || !data.probes || IDS.some(id => !data.probes[id] || typeof data.probes[id] !== 'object')) throw new Error('Invalid monitor response');
+          latest = data;
+          receivedAt = performance.now();
+          initialAge = freshness(data);
+          connected = true;
+        } catch (_) {
+          connected = false;
+        } finally {
+          clearTimeout(timeout);
+          controller = null;
+          busy = false;
+          $('refresh').disabled = false;
+          render();
+          schedule();
+        }
+      }
+
+      $('refresh').addEventListener('click', refresh);
+      document.addEventListener('visibilitychange', () => {
+        clearTimeout(timer);
+        if (document.hidden) {
+          connected = false;
+          controller?.abort();
+        } else {
+          render();
+          refresh();
+        }
+      });
+      window.addEventListener('online', refresh);
+      window.addEventListener('offline', () => { connected = false; controller?.abort(); render(); });
+      setInterval(() => { if (!document.hidden && latest) render(); }, 1000);
+      refresh();
+    })();
+  </script>
+</body>
+</html>
